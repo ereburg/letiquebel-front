@@ -1,0 +1,35 @@
+@font-face {
+  font-family: 'Harmonia';
+  src: url("../fonts/HarmoniaSansProCyr-Light.woff2") format("woff2"), url("../fonts/HarmoniaSansProCyr-Light.woff") format("woff");
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Harmonia';
+  src: url("../fonts/HarmoniaSansProCyr-Regular.woff2") format("woff2"), url("../fonts/HarmoniaSansProCyr-Regular.woff") format("woff");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Harmonia';
+  src: url("../fonts/HarmoniaSansProCyr-Bold_1.woff2") format("woff2"), url("../fonts/HarmoniaSansProCyr-Bold_1.woff") format("woff");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Harmonia';
+  src: url("../fonts/HarmoniaSansProCyr-Bold.woff2") format("woff2"), url("../fonts/HarmoniaSansProCyr-Bold.woff") format("woff");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Harmonia';
+  src: url("../fonts/HarmoniaSansProCyr-Black.woff2") format("woff2"), url("../fonts/HarmoniaSansProCyr-Black.woff") format("woff");
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+}

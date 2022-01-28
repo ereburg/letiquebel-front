@@ -1,0 +1,6 @@
+@import "~normalize.css";
+@import "~nprogress/nprogress.css";
+@import "~swiper/css/swiper.min.css";
+
+@import "./global.css";
+@import "./fonts.css";
