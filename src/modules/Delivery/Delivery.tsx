@@ -49,8 +49,6 @@ function Delivery() {
   deliveryOptions.door.description = doorDeliveryText;
   deliveryOptions.door.price = doorDeliveryCost;
 
-  const isDemoShop = process.env.REACT_APP_IS_DEMO_SHOP;
-
   return (
     <>
       <PageTitle>
@@ -62,118 +60,86 @@ function Delivery() {
             При заказе свыше {minOrderPriceForDelivery} {currency} доставка
             бесплатная!
           </SectionTitle>
-          {!isDemoShop ? (
-            <Text align="center">
-              Мы осуществляем доставку с помощью курьерской службы ЕВРОПОЧТА 7
-              дней в неделю. Средний срок доставки всего лишь 1-3 дня. Если вы
-              уже оформили заказ и хотите уточнить его статус, пожалуйста,
-              свяжитесь с нами по номеру телефона{' '}
-              <a href={`tel:${phone}`}>{phone}</a>
-            </Text>
-          ) : (
-            <Text align="center">
-              Мы осуществляем доставку с помощью курьерской службы НАЗВАНИЕ 7
-              дней в неделю. Средний срок доставки всего лишь 1-3 дня. Если вы
-              уже оформили заказ и хотите уточнить его статус, пожалуйста,
-              свяжитесь с нами по номеру телефона{' '}
-              <a href={`tel:123456789012`}>+123456789012</a>
-            </Text>
-          )}
+          <Text align="center">
+            Мы осуществляем доставку с помощью курьерской службы ЕВРОПОЧТА 7
+            дней в неделю. Средний срок доставки всего лишь 1-3 дня. Если вы уже
+            оформили заказ и хотите уточнить его статус, пожалуйста, свяжитесь с
+            нами по номеру телефона <a href={`tel:${phone}`}>{phone}</a>
+          </Text>
           <PackageImageWrap>
             <PackageImageElem src={packageImage} alt="package img" />
           </PackageImageWrap>
         </ContentContainer>
       </ContentSection>
-
-      {!isDemoShop ? (
-        <ContentSection>
-          <ContentContainer size="slim">
-            <DeliveryProviderInfo
-              providerImage={deliveryProviderImage}
-              providerDescription="Европочта - Доставка посылок по всей Беларуси"
-              deliveryOptionList={deliveryOptions}
-            />
-          </ContentContainer>
-        </ContentSection>
-      ) : (
-        <ContentSection>
-          <ContentContainer size="slim">
-            <DeliveryProviderInfoDemo />
-            <ActionsWrapper>
-              <ActionLink variant="containedBig" to={ROUTES.catalog.url}>
-                Перейти в каталог
-              </ActionLink>
-            </ActionsWrapper>
-          </ContentContainer>
-        </ContentSection>
-      )}
-
-      {!isDemoShop && (
-        <ContentSection>
-          <ContentContainer size="slim">
-            <SectionTitle gutter="small">
-              <img src={letterIcon} alt="letter" />
-              Оплатить очень просто!
-            </SectionTitle>
-            <Text align="center">
-              После оформления заказа мы отправим вам ссылку для оплаты на
-              указанный вами E-mail.
-            </Text>
-            <UsefulLinksWrapper>
-              <UsefulLinkList>
-                <UsefulLinkItem>
-                  <UsefulButton onClick={handleClickModalToggle}>
-                    Оплата карточкой
-                  </UsefulButton>
-                </UsefulLinkItem>
-                <UsefulLinkItem>
-                  <Link as={UsefulLink} to="/receiving-purchase">
-                    Правила получения товара после оплаты
-                  </Link>
-                </UsefulLinkItem>
-                <UsefulLinkItem>
-                  <Link as={UsefulLink} to="/refund">
-                    Возврат денежных средств
-                  </Link>
-                </UsefulLinkItem>
-                <UsefulLinkItem>
-                  <Link as={UsefulLink} to="/payment-security">
-                    Безопасность платежей
-                  </Link>
-                </UsefulLinkItem>
-                <UsefulLinkItem>
-                  <Link as={UsefulLink} to="/data-policy">
-                    Конфиденциальность информации
-                  </Link>
-                </UsefulLinkItem>
-              </UsefulLinkList>
-            </UsefulLinksWrapper>
-          </ContentContainer>
-        </ContentSection>
-      )}
-
-      {!isDemoShop && (
-        <ContentSection>
-          <ContentContainer size="slim">
-            <SectionTitle gutter="small">
-              <img src={faceSmileIcon} alt="smile" />
-              Быстрая доставка
-            </SectionTitle>
-            <Text align="center">
-              После оплаты вам лишь останется получить посылку, которую с
-              любовью соберут для вас наши сотрудники, удобным для вас способом!
-              Начинайте пользоваться сразу после получения ;-)
-            </Text>
-            <ActionsWrapper>
-              <ActionLink variant="containedBig" to={ROUTES.catalog.url}>
-                Перейти в каталог
-              </ActionLink>
-            </ActionsWrapper>
-          </ContentContainer>
-        </ContentSection>
-      )}
-
-      {!isDemoShop && isModalVisible ? (
+      <ContentSection>
+        <ContentContainer size="slim">
+          <DeliveryProviderInfo
+            providerImage={deliveryProviderImage}
+            providerDescription="Европочта - Доставка посылок по всей Беларуси"
+            deliveryOptionList={deliveryOptions}
+          />
+        </ContentContainer>
+      </ContentSection>
+      <ContentSection>
+        <ContentContainer size="slim">
+          <SectionTitle gutter="small">
+            <img src={letterIcon} alt="letter" />
+            Оплатить очень просто!
+          </SectionTitle>
+          <Text align="center">
+            После оформления заказа мы отправим вам ссылку для оплаты на
+            указанный вами E-mail.
+          </Text>
+          <UsefulLinksWrapper>
+            <UsefulLinkList>
+              <UsefulLinkItem>
+                <UsefulButton onClick={handleClickModalToggle}>
+                  Оплата карточкой
+                </UsefulButton>
+              </UsefulLinkItem>
+              <UsefulLinkItem>
+                <Link as={UsefulLink} to="/receiving-purchase">
+                  Правила получения товара после оплаты
+                </Link>
+              </UsefulLinkItem>
+              <UsefulLinkItem>
+                <Link as={UsefulLink} to="/refund">
+                  Возврат денежных средств
+                </Link>
+              </UsefulLinkItem>
+              <UsefulLinkItem>
+                <Link as={UsefulLink} to="/payment-security">
+                  Безопасность платежей
+                </Link>
+              </UsefulLinkItem>
+              <UsefulLinkItem>
+                <Link as={UsefulLink} to="/data-policy">
+                  Конфиденциальность информации
+                </Link>
+              </UsefulLinkItem>
+            </UsefulLinkList>
+          </UsefulLinksWrapper>
+        </ContentContainer>
+      </ContentSection>
+      <ContentSection>
+        <ContentContainer size="slim">
+          <SectionTitle gutter="small">
+            <img src={faceSmileIcon} alt="smile" />
+            Быстрая доставка
+          </SectionTitle>
+          <Text align="center">
+            После оплаты вам лишь останется получить посылку, которую с любовью
+            соберут для вас наши сотрудники, удобным для вас способом! Начинайте
+            пользоваться сразу после получения ;-)
+          </Text>
+          <ActionsWrapper>
+            <ActionLink variant="containedBig" to={ROUTES.catalog.url}>
+              Перейти в каталог
+            </ActionLink>
+          </ActionsWrapper>
+        </ContentContainer>
+      </ContentSection>
+      {isModalVisible ? (
         <PopupModal onClose={handleClickModalToggle}>
           <PaymentProviderInfo
             providerImage={paymentProviderImage}
@@ -236,7 +202,7 @@ const UsefulLinksWrapper = styled.div`
   &:not(:first-child) {
     margin-top: 2.5vw;
   }
-  
+
   ${media.laptop(css`
     max-width: 56vw;
   `)}

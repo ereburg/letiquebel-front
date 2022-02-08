@@ -8,6 +8,8 @@ export type GlobalParams = {
   doorDeliveryText: string;
   doorDeliveryCost: number;
   minOrderPriceForDelivery: number;
+  minOrderPriceForPostalDelivery: number;
+  postalDeliveryCost: number;
   officeDeliveryText: string;
   messageAfterOrder: string;
   currency: string;

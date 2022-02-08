@@ -74,7 +74,6 @@ export function getProductListThunk() {
 
     try {
       const response = await getProductList();
-      console.log('resp products: ', response.data.length);
       dispatch(setProductListFulfilled(response.data));
     } catch (error) {
       dispatch(setProductListRejected());

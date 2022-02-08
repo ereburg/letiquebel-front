@@ -77,7 +77,7 @@ export const MESSENGERS = {
 
 export const DELIVERY = {
   department: {
-    price: 0,
+    price: 4,
     name: 'DEPARTMENT',
     title: 'В отделение',
     description: '',

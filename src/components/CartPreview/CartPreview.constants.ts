@@ -1,3 +1,6 @@
-export const DEPARTMENT_DELIVERY_TEXT = 'Доставка в отделение';
-export const MIN_DOOR_DELIVERY_TEXT = 'До доставки до двери осталось';
-export const FREE_DOOR_DELIVERY_TEXT = 'У вас бесплатная доставка';
+export enum DeliveryTypes {
+  Postal = 'Доставка в отделение',
+  PostalMin = 'До доставки до отделения осталось',
+  DoorMin = 'До доставки до двери осталось',
+  Free = 'У вас бесплатная доставка',
+}

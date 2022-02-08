@@ -100,27 +100,18 @@ function Information({ orderState, checkoutState, totalPrice }: Props) {
       <HintMessage align="center">
         Все поля обязательны для заполнения
       </HintMessage>
+      {/*Данные клиента*/}
       <ContentBlock>
         <FieldsContainer>
           <FieldList>
             <FieldItem>
-              {!process.env.REACT_APP_IS_DEMO_SHOP ? (
-                <TextInputFormik
-                  name="phone"
-                  label="Номер телефона"
-                  placeholder="+375 XX XXXXXXX"
-                  formikState={orderState}
-                  autoFocus={true}
-                />
-              ) : (
-                <TextInputFormik
-                  name="phone"
-                  label="Номер телефона"
-                  placeholder="+7 (9XX) XXX-XX-XX"
-                  formikState={orderState}
-                  autoFocus={true}
-                />
-              )}
+              <TextInputFormik
+                name="phone"
+                label="Номер телефона"
+                placeholder="+375 XX XXXXXXX"
+                formikState={orderState}
+                autoFocus={true}
+              />
             </FieldItem>
             <FieldItem>
               <TextInputFormik
@@ -140,6 +131,7 @@ function Information({ orderState, checkoutState, totalPrice }: Props) {
           </FieldList>
         </FieldsContainer>
       </ContentBlock>
+      {/*Доставка*/}
       <ContentBlock>
         <ContentTitle>Доставка</ContentTitle>
         <GridContainer>
@@ -169,26 +161,19 @@ function Information({ orderState, checkoutState, totalPrice }: Props) {
           })}
         </GridContainer>
       </ContentBlock>
+      {/*Адрес доставки*/}
       <ContentBlock>
         <ContentTitle>Адрес доставки</ContentTitle>
         <FieldsContainer>
           <FieldList>
             <FieldItem>
-              {!process.env.REACT_APP_IS_DEMO_SHOP ? (
-                <SelectFormik
-                  name="delivery.region"
-                  label="Область"
-                  placeholder="Выберите область"
-                  options={REGION_OPTIONS}
-                  formikState={orderState}
-                />
-              ) : (
-                <TextInputFormik
-                  name="delivery.region"
-                  label="Область"
-                  formikState={orderState}
-                />
-              )}
+              <SelectFormik
+                name="delivery.region"
+                label="Область"
+                placeholder="Выберите область"
+                options={REGION_OPTIONS}
+                formikState={orderState}
+              />
             </FieldItem>
             <FieldItem>
               <TextInputFormik
@@ -242,6 +227,7 @@ function Information({ orderState, checkoutState, totalPrice }: Props) {
           </FieldList>
         </FieldsContainer>
       </ContentBlock>
+      {/*Оплата*/}
       <ContentBlock>
         <ContentTitle>Оплата</ContentTitle>
         <GridContainer>
@@ -266,20 +252,18 @@ function Information({ orderState, checkoutState, totalPrice }: Props) {
         </GridContainer>
       </ContentBlock>
 
-      {!process.env.REACT_APP_IS_DEMO_SHOP && (
-        <CustomContentSection as="div">
-          <ContentContainer noGutters size="slim">
-            <SectionTitle gutter="small">
-              <img src={letterIcon} alt="letter" />
-              Оплатить очень просто!
-            </SectionTitle>
-            <Text align="center">
-              После оформления заказа мы отправим вам ссылку для оплаты на
-              указанный вами E-mail.
-            </Text>
-          </ContentContainer>
-        </CustomContentSection>
-      )}
+      <CustomContentSection as="div">
+        <ContentContainer noGutters size="slim">
+          <SectionTitle gutter="small">
+            <img src={letterIcon} alt="letter" />
+            Оплатить очень просто!
+          </SectionTitle>
+          <Text align="center">
+            После оформления заказа мы отправим вам ссылку для оплаты на
+            указанный вами E-mail.
+          </Text>
+        </ContentContainer>
+      </CustomContentSection>
 
       <SummaryContainer
         extraPriceLabel="Доставка"
@@ -407,7 +391,7 @@ const GridItem = styled.div`
   &:not(:nth-child(-n + 2)) {
     margin-top: 20px;
   }
-  
+
   ${media.tablet(css`
     max-width: 45%;
   `)}
@@ -460,7 +444,7 @@ const OfferAgreement = styled(Text)`
   line-height: 1.4;
   text-align: center;
   color: ${colors.grey};
-  
+
   ${media.tablet(css`
     max-width: 35vw;
     margin-top: 2vw;

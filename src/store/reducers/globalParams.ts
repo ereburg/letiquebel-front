@@ -15,6 +15,8 @@ const initialState = {
     doorDeliveryText: '',
     doorDeliveryCost: 0,
     minOrderPriceForDelivery: 0,
+    minOrderPriceForPostalDelivery: 0,
+    postalDeliveryCost: 0,
     officeDeliveryText: '',
     messageAfterOrder: '',
     currency: '',
@@ -51,9 +53,11 @@ type GlobalParamsAction =
 function setGlobalParamsPending(): GlobalParamsAction {
   return { type: SET_PENDING, status: FETCH_STATUSES.LOADING };
 }
+
 function setGlobalParamsFulfilled(data: GlobalParams): GlobalParamsAction {
   return { type: SET_FULFILLED, status: FETCH_STATUSES.SUCCESS, data };
 }
+
 function setGlobalParamsRejected(): GlobalParamsAction {
   return { type: SET_REJECTED, status: FETCH_STATUSES.FAILURE };
 }

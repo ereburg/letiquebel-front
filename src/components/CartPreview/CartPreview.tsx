@@ -6,11 +6,7 @@ import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock';
 import { RootState } from '@store/reducers';
 import { removeProduct } from '@store/reducers/cart';
 
-import {
-  MIN_DOOR_DELIVERY_TEXT,
-  FREE_DOOR_DELIVERY_TEXT,
-  DEPARTMENT_DELIVERY_TEXT,
-} from './CartPreview.constants';
+import { DeliveryTypes } from './CartPreview.constants';
 import { ROUTES } from '@constants/common';
 import useMedia from '@hooks/useMedia';
 
@@ -39,9 +35,11 @@ function CartPreview({ isVisible, setVisible, ...props }: Props) {
     [dispatch]
   );
 
-  const { currency, minOrderPriceForDelivery } = useSelector(
-    (state: RootState) => state.globalParams.data
-  );
+  const {
+    currency,
+    minOrderPriceForDelivery,
+    minOrderPriceForPostalDelivery,
+  } = useSelector((state: RootState) => state.globalParams.data);
   const { productList, totalPrice } = useSelector(
     (state: RootState) => state.cart
   );
@@ -50,6 +48,8 @@ function CartPreview({ isVisible, setVisible, ...props }: Props) {
   const resultProductList = [...productList].reverse();
   const resultGiftList = giftList.filter((gift) => gift.price <= totalPrice);
   const priceUntilFreeDelivery = minOrderPriceForDelivery - totalPrice;
+  const priceUntilFreePostalDelivery =
+    minOrderPriceForPostalDelivery - totalPrice;
 
   useEffect(() => {
     const containerElem = containerRef.current;
@@ -141,15 +141,34 @@ function CartPreview({ isVisible, setVisible, ...props }: Props) {
           </Link>
         </S.Summary>
         <S.Delivery>
-          <S.DeliveryMessage
-            dangerouslySetInnerHTML={{
-              __html:
-                minOrderPriceForDelivery > totalPrice
-                  ? `${DEPARTMENT_DELIVERY_TEXT} - <span>Бесплатно</span><br />
-                     ${MIN_DOOR_DELIVERY_TEXT} <span>${priceUntilFreeDelivery} ${currency}</span>`
-                  : `${FREE_DOOR_DELIVERY_TEXT}`,
-            }}
-          />
+          {minOrderPriceForDelivery > totalPrice ? (
+            <>
+              <S.DeliveryMessage>
+                {priceUntilFreePostalDelivery > 0 ? (
+                  <>
+                    {DeliveryTypes.PostalMin}{' '}
+                    <span>
+                      {priceUntilFreePostalDelivery} {currency}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    {DeliveryTypes.Postal} - <span>Бесплатно</span>
+                  </>
+                )}
+                <br />
+                {DeliveryTypes.DoorMin}{' '}
+                <span>
+                  {priceUntilFreeDelivery} {currency}
+                </span>
+              </S.DeliveryMessage>
+            </>
+          ) : (
+            <>
+              <S.DeliveryMessage>{DeliveryTypes.Free}</S.DeliveryMessage>
+            </>
+          )}
+          <br />
         </S.Delivery>
       </S.Footer>
     </S.CartContainer>
