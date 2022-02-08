@@ -28,6 +28,11 @@ function Home({
   extraSectionTitle,
   extraProductList,
 }: Props) {
+  // Фильтруем наборы товаров
+  const productsWithoutSets = productList.filter(
+    (item) => !/(SET|BOX|PACK)$/i.test(item.title)
+  );
+
   return (
     <>
       <FeaturedSlider slideList={slideList} />
@@ -44,7 +49,7 @@ function Home({
       <ContentSection>
         <ContentContainer>
           <SectionTitle>Letique</SectionTitle>
-          <ProductPreviewList productList={productList} />
+          <ProductPreviewList productList={productsWithoutSets} />
         </ContentContainer>
       </ContentSection>
 
