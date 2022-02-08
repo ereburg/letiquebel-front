@@ -16,13 +16,14 @@ import Link from '@components/Link';
 import MainMenu from '@components/MainMenu';
 import CartPreview from '@components/CartPreview';
 
-import logoDefault from '@assets/images/logo.png';
+// import logoDefault from '@assets/images/logo.png';
+import logoDefaultSVG from '@assets/images/logo.svg';
 import logoKristitheone from '@assets/images/logo-kristitheone.png';
 import logoBotanovna from '@assets/images/logo-botanovna.png';
 import cartIcon from '@assets/images/icons/cart.png';
 
 const LOGOS: { [key: string]: string } = {
-  default: logoDefault,
+  default: logoDefaultSVG,
   kristitheone: logoKristitheone,
   botanovna: logoBotanovna,
 };
@@ -92,14 +93,10 @@ function Header({
   }
 
   useEffect(() => {
-    if (isMounted) {
-      setBodyOffset();
-    }
+    if (isMounted) setBodyOffset();
 
     function handleScroll() {
-      requestAnimationFrame(() => {
-        changeHeaderSize();
-      });
+      requestAnimationFrame(() => changeHeaderSize());
     }
 
     function handleResize() {
@@ -116,66 +113,77 @@ function Header({
   }, [isMounted, changeHeaderSize]);
 
   return (
-    <HeaderContainer ref={containerRef}>
-      <ContentContainer size="wide">
-        <HeaderInner>
-          <MainMenuToggle>
-            <MenuButton onClick={handlerClickMenuToggle}>
-              <span />
-            </MenuButton>
-          </MainMenuToggle>
-          <HeaderLogo
-            to={logoLink ?? '/'}
-            disabled={disabledLogo}
-            logo={logoType}
-          >
-            <img
-              src={logoType ? LOGOS[logoType] : LOGOS.default}
-              alt="Letique Cosmetics"
-            />
-          </HeaderLogo>
-          <ShoppingCart>
-            <CartButton onClick={handlerClickCartToggle}>
-              <CartCounter isVisible={isCartInitialized}>
-                {cartProductCount}
-              </CartCounter>
-            </CartButton>
-            <CartDropdown
-              isVisible={isCartVisible}
-              setVisible={handlerClickCartToggle}
-            />
-          </ShoppingCart>
-        </HeaderInner>
-      </ContentContainer>
+    <HeaderTag ref={containerRef}>
+      <HeaderContainer>
+        <ContentContainer size="wide">
+          <HeaderInner>
+            <MainMenuToggle>
+              <MenuButton onClick={handlerClickMenuToggle}>
+                <span />
+              </MenuButton>
+            </MainMenuToggle>
+            <HeaderLogo
+              to={logoLink ?? '/'}
+              disabled={disabledLogo}
+              logo={logoType}
+            >
+              <img
+                src={logoType ? LOGOS[logoType] : LOGOS.default}
+                alt="Letique Cosmetics"
+              />
+            </HeaderLogo>
+            <ShoppingCart>
+              <CartButton onClick={handlerClickCartToggle}>
+                <CartCounter isVisible={isCartInitialized}>
+                  {cartProductCount}
+                </CartCounter>
+              </CartButton>
+              <CartDropdown
+                isVisible={isCartVisible}
+                setVisible={handlerClickCartToggle}
+              />
+            </ShoppingCart>
+          </HeaderInner>
+        </ContentContainer>
+      </HeaderContainer>
 
       <MainMenu isVisible={isMenuVisible} setVisible={handlerClickMenuToggle} />
-    </HeaderContainer>
+    </HeaderTag>
   );
 }
 
-const HeaderContainer = styled.header`
+const HeaderTag = styled.header`
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 998;
+  width: 100%;
+`;
+
+const HeaderContainer = styled.div`
+  display: block;
   width: 100%;
   padding: 3vw 0 2vw;
-  transition: padding 0.3s ${timingFn.ease};
-  z-index: 998;
+  backdrop-filter: blur(0px);
+  background-color: rgba(255, 255, 255, 0);
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.1);
+  transition: padding 300ms ${timingFn.ease}, box-shadow 150ms ${timingFn.ease};
 
-  &.fixed {
+  .fixed & {
     padding: 1vw 0;
-    background-color: ${colors.white};
+    background-color: rgba(255, 255, 255, 0.8);
     box-shadow: 0 3px 15px 1px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(20px);
   }
-  
+
   ${media.laptop(css`
-    &.fixed {
+    .fixed & {
       padding: 1.5vw 0;
     }
   `)}
 
   ${media.tablet(css`
-    &.fixed {
+    .fixed & {
       padding: 2vw 0;
     }
   `)}
@@ -183,7 +191,7 @@ const HeaderContainer = styled.header`
   ${media.mobile(css`
     padding: 7.5vw 0 2.5vw;
 
-    &.fixed {
+    .fixed & {
       padding: 4vw 0;
     }
   `)}
@@ -261,6 +269,7 @@ const HeaderLogo = styled(Link)<{ logo?: string; disabled?: boolean }>`
           img {
             width: 17vw;
             min-width: 220px;
+            transition: width 300ms ${timingFn.ease};
 
             .fixed & {
               width: 13vw;
@@ -284,6 +293,7 @@ const HeaderLogo = styled(Link)<{ logo?: string; disabled?: boolean }>`
           img {
             width: 8.8vw;
             min-width: 120px;
+            transition: width 300ms ${timingFn.ease};
 
             .fixed & {
               width: 6vw;
@@ -323,7 +333,7 @@ const ShoppingCart = styled.div`
 const CartButton = styled.button`
   display: flex;
   align-items: flex-start;
-  
+
   &:after {
     content: '';
     display: block;
@@ -335,7 +345,7 @@ const CartButton = styled.button`
     margin-left: 10px;
     background: url("${cartIcon}") no-repeat center / contain;
   }
-  
+
   ${media.mobile(css`
     position: absolute;
     top: 50%;
