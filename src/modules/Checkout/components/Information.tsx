@@ -10,7 +10,13 @@ import { usePrevious } from '@hooks/usePrevious';
 
 import { media } from '@utils/mixin';
 import { colors } from '@constants/theme';
-import { DELIVERY, PAYMENT, ROUTES } from '@constants/common';
+import {
+  DELIVERY,
+  IDeliveryCollection,
+  IDeliveryItem,
+  PAYMENT,
+  ROUTES,
+} from '@constants/common';
 
 import { REGION_OPTIONS } from '../Checkout.constants';
 
@@ -40,12 +46,19 @@ function Information({ orderState, checkoutState, totalPrice }: Props) {
     doorDeliveryCost,
     officeDeliveryText,
     minOrderPriceForDelivery,
+    minOrderPriceForPostalDelivery,
+    postalDeliveryCost,
   } = useSelector((state: RootState) => state.globalParams.data);
 
-  const deliveryOptions: typeof DELIVERY = JSON.parse(JSON.stringify(DELIVERY));
+  const deliveryOptions: IDeliveryCollection = JSON.parse(
+    JSON.stringify(DELIVERY)
+  );
   deliveryOptions.department.description = officeDeliveryText;
+  deliveryOptions.department.price = postalDeliveryCost;
+  deliveryOptions.department.priceForFreeDelivery = minOrderPriceForPostalDelivery;
   deliveryOptions.door.description = doorDeliveryText;
   deliveryOptions.door.price = doorDeliveryCost;
+  deliveryOptions.door.priceForFreeDelivery = minOrderPriceForDelivery;
 
   const paymentOptions: typeof PAYMENT = JSON.parse(JSON.stringify(PAYMENT));
   // paymentOptions.card.description = officeDeliveryText;
@@ -80,6 +93,22 @@ function Information({ orderState, checkoutState, totalPrice }: Props) {
       behavior: 'smooth',
     });
   }
+
+  // Когда компонент монтируется - обновляем дефолтное значение доставки
+  useEffect(() => {
+    const [currentDeliveryMethod]: IDeliveryItem[] = Object.values(
+      deliveryOptions
+    ).filter((method) => method.name === activeDeliveryMethod);
+
+    if (currentDeliveryMethod) {
+      onChangeDeliveryMethod(
+        currentDeliveryMethod.name,
+        totalPrice >= currentDeliveryMethod.priceForFreeDelivery
+          ? 0
+          : currentDeliveryMethod.price
+      );
+    }
+  }, []);
 
   useEffect(() => {
     if (prevOrderState?.isSubmitting) {
@@ -137,7 +166,7 @@ function Information({ orderState, checkoutState, totalPrice }: Props) {
         <GridContainer>
           {Object.values(deliveryOptions).map((item, index) => {
             const isActive = activeDeliveryMethod === item.name;
-            const isDeliveryFree = totalPrice >= minOrderPriceForDelivery;
+            const isDeliveryFree = totalPrice >= item.priceForFreeDelivery;
             const price = isDeliveryFree ? 0 : item.price;
 
             const onClick = !item.isUnavailable

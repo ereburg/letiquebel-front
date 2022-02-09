@@ -44,14 +44,12 @@ function SummaryPanel({
           </PackagePriceValue>
         </SummaryPriceCell>
       )}
-
       <SummaryPriceCell>
         <TotalPriceLabel>Итого:</TotalPriceLabel>
         <TotalPriceValue>
           {totalPrice} {currency}
         </TotalPriceValue>
       </SummaryPriceCell>
-
       <SummaryButtonCell>
         {checkoutState !== 'IN_PROGRESS' ? (
           <SummaryButton variant="containedBig" onClick={actionButtonHandler}>

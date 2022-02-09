@@ -75,9 +75,24 @@ export const MESSENGERS = {
   },
 };
 
-export const DELIVERY = {
+export interface IDeliveryItem {
+  price: number;
+  priceForFreeDelivery: number;
+  name: string;
+  title: string;
+  description: string;
+  actionLabel: string;
+  actionLink: string;
+  isUnavailable: boolean;
+}
+export interface IDeliveryCollection {
+  [key: string]: IDeliveryItem;
+}
+
+export const DELIVERY: IDeliveryCollection = {
   department: {
-    price: 4,
+    price: 2,
+    priceForFreeDelivery: 16,
     name: 'DEPARTMENT',
     title: 'В отделение',
     description: '',
@@ -89,6 +104,7 @@ export const DELIVERY = {
   },
   door: {
     price: 6,
+    priceForFreeDelivery: 100,
     name: 'DOOR_TO_DOOR',
     title: 'До двери',
     description: '',
